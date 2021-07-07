@@ -16,10 +16,10 @@ namespace RaspberryWebTerminal.Models
 
         public string GenerateReport(int? optionalParameter = 0)
         {
-            var head = $"Class GUID: {_classGuid};\n";
-            var body = $"Type: Unknown. Info: {Info};\n";
-            var foot = $"Last property value: {DefaultProperty}";
-            var resultString = head + body + foot;
+            string head = $"Class GUID: {_classGuid};\n";
+            string body = $"Type: Unknown. Info: {Info};\n";
+            string foot = $"Last property value: {DefaultProperty}";
+            string resultString = head + body + foot;
 
             return resultString;
         }
