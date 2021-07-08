@@ -1,9 +1,14 @@
 ﻿var haveEvents = 'GamepadEvent' in window;
 var haveWebkitEvents = 'WebKitGamepadEvent' in window;
 var controllers = {};
-var rAF = window.mozRequestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.requestAnimationFrame;
+var rAF = window.requestAnimationFrame;
+
+addEventListener("click", function()
+{
+    let element = document.documentElement,
+        request = element.requestFullscreen;
+    request.call(element);
+});
 
 function connecthandler(e) 
 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Logging;
@@ -18,12 +19,12 @@ namespace RaspberryWebTerminal.Controllers
         }
 
         [HttpGet]
-        [Route("gamepad.js")]
-        public ActionResult GetGamepadScript()
+        [Route("{fileName}")]
+        public async Task<ActionResult> Get(string fileName)
         {
-            string fileName = "/Views/WebUI/gamepad.js";
-            string filePath = AppDomain.CurrentDomain.BaseDirectory + fileName;
-            byte[] fileData = System.IO.File.ReadAllBytes(filePath);
+            string fileDirectory = "/Views/WebUI/";
+            string filePath = AppDomain.CurrentDomain.BaseDirectory + fileDirectory + fileName;
+            byte[] fileData = await System.IO.File.ReadAllBytesAsync(filePath);
             string contentType;
             new FileExtensionContentTypeProvider().TryGetContentType(fileName, out contentType);
             ContentDisposition content = new ContentDisposition
