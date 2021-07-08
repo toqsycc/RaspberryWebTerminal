@@ -1,4 +1,5 @@
 ﻿@page
+@using RaspberryWebTerminal
 @model RaspberryWebTerminal.Index
 
 @{
@@ -12,6 +13,7 @@
     <title>@DateTime.Now</title>
 </head>
 <body>
+<img src="/camera/" alt="@Startup.Camera.What">Aboba</img>
 <script type="text/javascript" src="/scripts/gamepad.js"></script>
 <style>
   .full-screen

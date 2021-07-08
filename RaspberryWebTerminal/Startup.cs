@@ -11,14 +11,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RaspberryWebTerminal.Models;
 
 namespace RaspberryWebTerminal
 {
     public class Startup
     {
+        public static WebcamDevice Camera { get; private set; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Camera = new WebcamDevice();
         }
 
         public IConfiguration Configuration { get; }

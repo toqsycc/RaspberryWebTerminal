@@ -10,7 +10,7 @@ namespace RaspberryWebTerminal.Models
         private FilterInfoCollection _videoDevices;
         private VideoCaptureDevice _device;
         private VideoCapabilities[] _snapshotCapabilities;
-        public Bitmap LastFrame;
+        private Bitmap _lastFrame;
 
         public bool IsSucceeded { get; }
         public string What { get; }
@@ -28,8 +28,8 @@ namespace RaspberryWebTerminal.Models
                 throw new ApplicationException(What);
             }
 
-            Camera = _videoDevices[0].Name;
-            _device = new VideoCaptureDevice(_videoDevices[0].MonikerString);
+            Camera = _videoDevices[1].Name;
+            _device = new VideoCaptureDevice(_videoDevices[1].MonikerString);
             _snapshotCapabilities = _device.SnapshotCapabilities;
 
             if (_snapshotCapabilities.Length == 0)
@@ -47,26 +47,29 @@ namespace RaspberryWebTerminal.Models
                 IsSucceeded = false;
                 throw new ApplicationException(What);
             }
-            
+
             IsSucceeded = true;
             What = "Webcam founded successfully.";
         }
 
         public void GetFrame(object sender, NewFrameEventArgs eventArgs)
         {
-            LastFrame = eventArgs.Frame;
+            _lastFrame = eventArgs.Frame.Clone(
+                new RectangleF(
+                    0, 0,
+                    eventArgs.Frame.Width, eventArgs.Frame.Height), eventArgs.Frame.PixelFormat);
         }
 
         public Bitmap CaptureFrame()
         {
-            return LastFrame;
+            return _lastFrame;
         }
 
         public void GetSnapshot()
         {
-            LastFrame.Save(DestinationAddress);
+            _lastFrame.Save(DestinationAddress);
         }
-        
+
         public void Shutdown()
         {
             _device.SignalToStop();
