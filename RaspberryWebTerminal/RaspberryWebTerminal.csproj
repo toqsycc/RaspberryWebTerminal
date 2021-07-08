@@ -12,4 +12,15 @@
         <PackageReference Include="System.Drawing.Common" Version="6.0.0-preview.5.21301.5" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Views\WebUI\gamepad.js" />
+      <Content Include="Views\WebUI\gamepad.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Views\WebUI\main.js" />
+      <Content Include="Views\WebUI\main.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>
