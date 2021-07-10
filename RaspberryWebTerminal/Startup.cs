@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using RaspberryWebTerminal.Models;
+using RaspberryWebTerminal.Hubs;
 
 namespace RaspberryWebTerminal
 {
@@ -31,6 +32,7 @@ namespace RaspberryWebTerminal
         {
             services.AddControllers();
             services.AddMvc();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +44,7 @@ namespace RaspberryWebTerminal
             }
             
             app.UseRouting();
-
+            app.UseStaticFiles();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -51,6 +53,7 @@ namespace RaspberryWebTerminal
                     name: "default",
                     pattern: "{controller=webui}/{action=index}/{id?}");
                 endpoints.MapControllers();
+                endpoints.MapHub<StreamingHub>("/stream");
             });
         }
     }

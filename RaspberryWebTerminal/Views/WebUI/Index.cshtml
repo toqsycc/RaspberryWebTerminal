@@ -13,8 +13,12 @@
     <title>@DateTime.Now</title>
 </head>
 <body>
-<img src="/camera/" alt="@Startup.Camera.What">Aboba</img>
-<script type="text/javascript" src="/scripts/gamepad.js"></script>
+<img id="streamingSource" src="/camera/?random" alt="@Startup.Camera.What"/>
+<script type="text/javascript" src="~/node_modules/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="~/node_modules/aspnet/signalr/dist/browser/signalr.js"></script>
+<script type="text/javascript" src="~/js/main.js"></script>
+<script type="text/javascript" src="~/js/gamepad.js"></script>
+<script type="text/javascript" src="~/js/camera.js"></script>
 <style>
   .full-screen
   {
