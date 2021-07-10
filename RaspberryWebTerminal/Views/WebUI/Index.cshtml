@@ -13,13 +13,20 @@
     <title>@DateTime.Now</title>
 </head>
 <body>
-<img id="streamingSource" src="/camera/?random" alt="@Startup.Camera.What"/>
+<canvas id="canvas" class="mainCanvas"></canvas>
 <script type="text/javascript" src="~/node_modules/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="~/node_modules/aspnet/signalr/dist/browser/signalr.js"></script>
 <script type="text/javascript" src="~/js/main.js"></script>
 <script type="text/javascript" src="~/js/gamepad.js"></script>
 <script type="text/javascript" src="~/js/camera.js"></script>
 <style>
+  .mainCanvas
+  {
+    width: 640px;
+    height: 480px;
+    background-color: rgb(32, 32, 32);
+    margin: 0;
+  }
   .full-screen
   {
     font-family: Consolas, sans-serif;

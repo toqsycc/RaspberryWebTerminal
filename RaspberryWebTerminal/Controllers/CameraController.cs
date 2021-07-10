@@ -30,13 +30,13 @@ namespace RaspberryWebTerminal.Controllers
             string contentType;
             
             Bitmap frame = Startup.Camera.CaptureFrame();
-            frame.Save(filePath, ImageFormat.Png);
+            frame.Save(filePath, ImageFormat.Jpeg);
             byte[] rawData = await System.IO.File.ReadAllBytesAsync(filePath);
             
-            new FileExtensionContentTypeProvider().TryGetContentType("frame.png", out contentType);
+            new FileExtensionContentTypeProvider().TryGetContentType("frame.jpg", out contentType);
             ContentDisposition content = new ContentDisposition
             {
-                FileName = "frame.png",
+                FileName = "frame.jpg",
                 Inline = true
             };
             
