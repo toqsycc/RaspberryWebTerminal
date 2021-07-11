@@ -1,35 +1,25 @@
-﻿var connection = new signalR.HubConnectionBuilder().withUrl('/stream').build();
-var canvas = document.getElementById('canvas').getContext('2d');
-
-function draw() {
-    canvas.clearRect(0, 0, canvas.width, canvas.height);
-    var img = new Image();
-    img.onload = function()
-    {
-        canvas.drawImage(img, 0, 0);
+﻿const canvas = document.querySelector('canvas');
+const context = canvas.getContext('2d');
+const FRAME_PATH = 'http://localhost:5000/camera/';
+async function loop() {
+    while (true) {
+        await draw();
     }
-    img.src = 'http://localhost:5000/camera/?random';
 }
-
-connection.start().then(() => connection.invoke('SendFrame'));
-
-connection.on('NewFrameReceived', function () {
-    console.log("Frame received and updated");
-    draw();
-});
-
-function getNewFrame() {
-    caches.open('v1').then(function (cache) {
-        cache.delete('?random').then(function () {
-            console.log("Older frame removed");
+function draw() {
+    const image = new Image(canvas.width, canvas.height);
+    image.src = `${FRAME_PATH}?ts=${Date.now()}`;
+    image.alt="";
+    return new Promise((resolve, reject) => {
+        image.addEventListener("error", (event) => reject(event.error), {
+            once: true
         });
-    });
-    draw();
-    connection.invoke('SendFrame').catch(function (err) {
-        return console.error(err.toString());
+        image.addEventListener("load", () => {
+                const frameId = requestAnimationFrame(() =>
+                    context.drawImage(image,  0, 0, canvas.width, canvas.height));
+                resolve(frameId);
+            },
+            {once: true});
     });
 }
-
-$(document).ready(function () {
-    refresh = setInterval("getNewFrame()", 42);
-});
+window.addEventListener("load", () => loop());

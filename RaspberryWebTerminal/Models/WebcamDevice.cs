@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using AForge.Video;
 using AForge.Video.DirectShow;
 
@@ -58,6 +59,7 @@ namespace RaspberryWebTerminal.Models
                 new RectangleF(
                     0, 0,
                     eventArgs.Frame.Width, eventArgs.Frame.Height), eventArgs.Frame.PixelFormat);
+            _lastFrame.Save(AppDomain.CurrentDomain.BaseDirectory + "frame.jpg", ImageFormat.Jpeg);
         }
 
         public Bitmap CaptureFrame()
